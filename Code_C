@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//hash//
+void board( char house2[9]){
+    system("cls");//limpa o terminal toda vez que inicia//
+    printf("\t 1 | 2 | 3\n");//cola para ver os numeros dos lugares//
+    printf("\t------------\n");
+    printf("\t 4 | 5 | 6\n");
+    printf("\t------------\n");
+    printf("\t 7 | 8 | 9\n\n\n\n\n");
+    printf("\t %c | %c | %c \n",house2[0],house2[1],house2[2]);
+    printf("\t __________\n");
+    printf("\t %c | %c | %c \n",house2[3],house2[4],house2[5]);
+    printf("\t __________\n");
+    printf("\t %c | %c | %c \n\n\n\n",house2[6],house2[7],house2[8]);
+
+}
+int main()
+{
+    //criando uma varivel que cria as casas do jogo da velha//
+    char house[9] = {'1','2','3','4','5','6','7','8','9'};//variavel-vetores que guarda o numero da casa
+    char res;
+    int cont_jogadas,jogada,vez = 0,i;//variaveis//
+    do{
+            cont_jogadas = 1;
+            for(i=0;i<=8;i++){
+                house[i]=' ';
+            }
+            do{
+                board(house);
+                printf("Digite a casa para marcar[1-9]\n");
+                scanf("%i",&jogada);
+                if(jogada < 1 || jogada > 9){
+                    jogada = 0;
+                }else if(house[jogada-1] != ' '){
+                jogada = 0;
+                }else{
+                    if(vez%2 == 0){
+                        house[jogada-1] = 'X';
+                    }else{
+                        house[jogada-1]= 'O';
+                    }
+                    cont_jogadas++;
+                    vez++;
+                }
+                //possibilidade de vitorias//
+                if(house[0]=='X' && house[1]=='X' && house[2] =='X'){cont_jogadas = 11;}
+                if(house[3]=='X' && house[4]=='X' && house[5] =='X'){cont_jogadas = 11;}
+                if(house[6]=='X' && house[7]=='X' && house[8] =='X'){cont_jogadas = 11;}
+                if(house[0]=='X' && house[3]=='X' && house[6] =='X'){cont_jogadas = 11;}
+                if(house[1]=='X' && house[4]=='X' && house[7] =='X'){cont_jogadas = 11;}
+                if(house[2]=='X' && house[5]=='X' && house[8] =='X'){cont_jogadas = 11;}
+                if(house[0]=='X' && house[4]=='X' && house[8] =='X'){cont_jogadas = 11;}
+                if(house[2]=='X' && house[4]=='X' && house[6] =='X'){cont_jogadas = 11;}
+
+                if(house[3]=='O' && house[4]=='O' && house[5] =='O'){cont_jogadas = 12;}
+                if(house[6]=='O' && house[7]=='O' && house[8] =='O'){cont_jogadas = 12;}
+                if(house[0]=='O' && house[3]=='O' && house[6] =='O'){cont_jogadas = 12;}
+                if(house[1]=='O' && house[4]=='O' && house[7] =='O'){cont_jogadas = 12;}
+                if(house[2]=='O' && house[5]=='O' && house[8] =='O'){cont_jogadas = 12;}
+                if(house[0]=='O' && house[4]=='O' && house[8] =='O'){cont_jogadas = 12;}
+                if(house[2]=='O' && house[4]=='O' && house[6] =='O'){cont_jogadas = 12;}
+            }while(cont_jogadas <= 9 );
+            board(house);
+            if(cont_jogadas == 10){
+                printf("Jogo Empatado\n");
+            }if(cont_jogadas == 11){
+                printf("Vencedor X !!!!\n");
+            }if(cont_jogadas == 12){
+                printf("Vencedor O !!!!\n");
+            }
+
+        printf("Play Again ?[s-n]\n");
+        scanf("%s",&res);
+    }while(res =='s');
+    return 0;
+}
